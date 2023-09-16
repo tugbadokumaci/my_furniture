@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 extension ContextExtension on BuildContext {
+  double dynamicWidth(double val) => MediaQuery.of(this).size.width * val;
+  double dynamicHeight(double val) => MediaQuery.of(this).size.height * val;
+
+  ThemeData get theme => Theme.of(this);
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 }
 
@@ -48,4 +52,19 @@ extension PageExtension on BuildContext {
 extension DurationExtension on BuildContext {
   Duration get lowDuration => const Duration(milliseconds: 500);
   Duration get normalDuration => const Duration(seconds: 1);
+}
+
+// extension NumberExtension on BuildContext {
+//   double get smallValue => dynamicHeight(0.01);
+//   double get mediumValue => dynamicHeight(0.03);
+//   double get largeValue => dynamicHeight(0.05);
+// }
+
+extension ButtonExtension on BuildContext {
+  double get buttonWidth => dynamicWidth(0.8);
+  double get buttonHeight => dynamicHeight(0.06);
+}
+
+extension EmptyWidget on BuildContext {
+  Widget get emptyWidgetHeight => SizedBox(height: lowValue);
 }

@@ -1,9 +1,9 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:my_furniture/core/components/not_found_navigation_widget.dart';
 import 'package:my_furniture/core/constants/navigation/navigation_constants.dart';
-import 'package:my_furniture/view/home/home_view.dart';
+
+import '../../../view/home/view/home_view.dart';
+import '../../../view/login/view/login_view.dart';
 
 class NavigationRoute {
   static NavigationRoute _instance = NavigationRoute._init();
@@ -15,7 +15,8 @@ class NavigationRoute {
     switch (settings.name) {
       case NavigationConstants.HOME_VIEW:
         return normalNavigate(HomeView());
-
+      case NavigationConstants.LOGIN_VIEW:
+        return normalNavigate(LoginView());
       default:
         return MaterialPageRoute(builder: (context) => const NotFoundNavigation());
     }
