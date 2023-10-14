@@ -14,7 +14,6 @@ class HomeService extends IHomeService {
     print('getCategories called');
     try {
       final result = await dio.get(categoriesPath);
-      print('result: $result, status code: ${result.statusCode}');
       if (result.statusCode == HttpStatus.ok) {
         final List<CategoryModel> value = (result.data as List<dynamic>)
             .map((dynamic i) => CategoryModel.fromJson(i as Map<String, dynamic>))
@@ -35,9 +34,10 @@ class HomeService extends IHomeService {
 
   @override
   Future<List<ProductModel>?> getPopular() async {
+    print('getPopular called');
+
     try {
-      final result = await dio.get(productsPath);
-      print('result.data: ${result.data}, status code: ${result.statusCode}');
+      final result = await dio.get('${productsPath}?userId=1');
 
       if (result.statusCode == HttpStatus.ok) {
         final List<ProductModel> value = (result.data as List<dynamic>)

@@ -26,6 +26,12 @@ class LocaleManager {
     }
   }
 
+  Future<void> setSearchHistoryList(List<String> searchHistory) async {
+    await _preferences!.setStringList('searchHistory', searchHistory);
+  }
+
+  List<String> getSearchHistoryList() => _preferences!.getStringList('searchHistory') ?? [];
+
   Future<void> setStringValue(PreferencesKeys key, String value) async {
     await _preferences!.setString(key.toString(), value);
   }

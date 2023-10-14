@@ -7,15 +7,28 @@ class TextThemeLight {
   static TextThemeLight get instance => _instance ??= TextThemeLight._init();
 
   final TextStyle TitleExtraBig = TextStyle(
-      fontSize: 32, fontFamily: 'Poppins-SemiBold.ttf', letterSpacing: 0.5, color: ColorSchemeLight.instance.orange);
+      fontWeight: FontWeight.w600, // semi-bold
+      fontSize: 32,
+      fontFamily: 'Poppins',
+      letterSpacing: 0.5,
+      color: ColorSchemeLight.instance.orange);
 
   final TextStyle TitleBig = TextStyle(
-      fontSize: 24, fontFamily: 'Poppins-SemiBold.ttf', letterSpacing: 0.5, color: ColorSchemeLight.instance.dark);
-  final TextStyle TitleMedium = TextStyle(
-      fontSize: 20, fontFamily: 'Poppins-SemiBold.ttf', letterSpacing: 0.5, color: ColorSchemeLight.instance.dark);
+      fontWeight: FontWeight.w600, // semi-bold
+      fontSize: 24,
+      fontFamily: 'Poppins',
+      letterSpacing: 0.5,
+      color: ColorSchemeLight.instance.dark);
 
-  final TextStyle TextMedium = TextStyle(
-      fontSize: 14, fontFamily: 'Poppins-Regular.ttf', letterSpacing: 0.5, color: ColorSchemeLight.instance.darkGray);
-  final TextStyle TextSmall = TextStyle(
-      fontSize: 12, fontFamily: 'Poppins-Regular.ttf', letterSpacing: 0.5, color: ColorSchemeLight.instance.darkGray);
+  final TextStyle TitleMedium = TextStyle(
+      fontWeight: FontWeight.w600, // semi-bold
+      fontSize: 20,
+      fontFamily: 'Poppins',
+      letterSpacing: 0.5,
+      color: ColorSchemeLight.instance.dark);
+
+  final TextStyle TextMedium =
+      TextStyle(fontSize: 14, fontFamily: 'Poppins', letterSpacing: 0.5, color: ColorSchemeLight.instance.darkGray);
+  final TextStyle TextSmall =
+      TextStyle(fontSize: 12, fontFamily: 'Poppins', letterSpacing: 0.5, color: ColorSchemeLight.instance.darkGray);
 }

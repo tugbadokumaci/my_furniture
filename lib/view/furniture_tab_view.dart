@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_furniture/view/search/view/search_view.dart';
 
 import 'home/view/home_view.dart';
 
@@ -11,7 +12,7 @@ class FurnitureTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: _FurniturePages.values.length,
-      child: const Scaffold(
+      child: Scaffold(
         bottomNavigationBar: BottomAppBar(
           child: TabBar(tabs: [
             Tab(icon: Icon(Icons.home)),
@@ -20,12 +21,14 @@ class FurnitureTabView extends StatelessWidget {
             Tab(icon: Icon(Icons.person)),
           ]),
         ),
-        body: TabBarView(children: [
-          HomeView(),
-          SizedBox(),
-          SizedBox(),
-          SizedBox(),
-        ]),
+        body: TabBarView(
+          children: [
+            HomeView(),
+            SearchView(),
+            SizedBox(),
+            SizedBox(),
+          ],
+        ),
       ),
     );
   }

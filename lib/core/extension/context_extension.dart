@@ -66,5 +66,6 @@ extension ButtonExtension on BuildContext {
 }
 
 extension EmptyWidget on BuildContext {
-  Widget get emptyWidgetHeight => SizedBox(height: lowValue);
+  Widget emptyWidgetHeight(double val) => SizedBox(height: val);
+  Widget emptyWidgetWidth(double val) => SizedBox(width: val);
 }

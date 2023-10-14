@@ -1,5 +1,10 @@
 {
     "home": {
-        "title": "Hallo Welt!"
+        "title": "Explore What Your Home Needs",
+        "categories": "Categories",
+        "newSeason": "New Season",
+        "seeAll": "See all",
+        "popular": "Popular",
+        "searchBar": "Chair, Table, Lamp, etc"
     }
 }

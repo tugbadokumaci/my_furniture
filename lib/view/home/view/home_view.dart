@@ -1,15 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_furniture/core/components/category_display_tile.dart';
 import 'package:my_furniture/core/constants/app/app_constants.dart';
 import 'package:my_furniture/core/extension/context_extension.dart';
 import 'package:my_furniture/core/extension/string_extension.dart';
 import 'package:my_furniture/core/init/lang/locale_keys.g.dart';
+import 'package:my_furniture/core/init/theme/light/color_scheme_light.dart';
 import 'package:my_furniture/core/init/theme/light/text_theme_light.dart';
+import 'package:my_furniture/product/widget/furniture_slider.dart';
 import 'package:my_furniture/view/home/service/home_service.dart';
 import 'package:my_furniture/view/home/cubit/home_cubit.dart';
 
+import '../../../core/components/product_display_tile.dart';
 import '../../../product/model/product_model.dart';
+import '../../search/view/search_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -19,7 +24,11 @@ class HomeView extends StatelessWidget {
     return BlocProvider<HomeCubit>(
       create: (context) =>
           HomeCubit(HomeService(Dio(BaseOptions(baseUrl: ApplicationConstants.BASE_URL))))..getHomeData(),
-      child: _buildScaffold(context),
+      child: SafeArea(
+          child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: _buildScaffold(context),
+      )),
     );
   }
 
@@ -33,106 +42,165 @@ class HomeView extends StatelessWidget {
           // context.read<HomeCubit>().getHomeData();
           // } else
           if (state is HomeLoading) {
-            return _buildLoading();
+            return _buildLoading(context);
           } else if (state is HomeError) {
-            return _buildError(state);
+            return _buildError(context, state);
           }
-          return Padding(
-            padding: context.paddingNormal,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _header(),
-                _searchBar(context),
-                _productListView(context, state),
-                _categoryHeader(context),
-                _categoryListView(context, state),
-                // slider
-              ],
-            ),
+          return ListView(
+            children: [
+              _header(context),
+              _searchBar(context),
+              _subHeader(context, LocaleKeys.home_categories.locale),
+              _categoryListView(context, state),
+              _sliderListView(context),
+              _subHeader(context, LocaleKeys.home_newSeason.locale),
+              _productListView(context, state),
+
+              // slider
+            ],
           );
         },
       ),
     );
   }
 
-  Widget _buildLoading() {
-    return const Center(child: CircularProgressIndicator());
-  }
-
-  TextField _searchBar(BuildContext context) {
-    return TextField(
-      onChanged: (value) {
-        context.read<HomeCubit>().searchByItems(value);
-      },
-      decoration: InputDecoration(prefixIcon: const Icon(Icons.search), hintText: LocaleKeys.home_searchBar.locale),
+  Widget _buildLoading(BuildContext context) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: const Center(child: CircularProgressIndicator()),
     );
   }
 
-  Text _header() => Text(LocaleKeys.home_title.locale);
+  Widget _searchBar(BuildContext context) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: TextField(
+        readOnly: true,
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => SearchView(),
+          ));
+        },
+        // onChanged: (value) {
+        //   context.read<HomeCubit>().searchByItems(value);
+        // },
+        decoration: InputDecoration(
+          contentPadding: context.paddingLow,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          prefixIcon: const Icon(Icons.search),
+          hintText: LocaleKeys.home_searchBar.locale,
+        ),
+      ),
+    );
+  }
 
-  Widget _categoryHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(LocaleKeys.home_categories.locale, style: TextThemeLight.instance.TitleMedium),
-        InkWell(
-            onTap: () {
-              context.read<HomeCubit>().seeAllItems();
-            },
-            child: Text(LocaleKeys.home_seeAll.locale,
-                style: TextThemeLight.instance.TextSmall.copyWith(color: Colors.orange))),
-      ],
+  Widget _header(BuildContext context) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(child: Text(LocaleKeys.home_title.locale, style: TextThemeLight.instance.TitleBig)),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notification_important),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _subHeader(BuildContext context, String title) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: TextThemeLight.instance.TitleMedium),
+          InkWell(
+              onTap: () {
+                // context.read<HomeCubit>().seeAllItems();
+              },
+              child: TextButton(
+                child: Row(
+                  children: [
+                    Text(LocaleKeys.home_seeAll.locale,
+                        style: TextThemeLight.instance.TextMedium.copyWith(color: ColorSchemeLight.instance.orange)),
+                    Icon(Icons.arrow_forward_outlined, color: ColorSchemeLight.instance.orange, size: 24)
+                  ],
+                ),
+                onPressed: () {},
+              )),
+        ],
+      ),
     );
   }
 
   Widget _categoryListView(BuildContext context, HomeState state) {
-    return SizedBox(
-      height: context.dynamicHeight(0.2),
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: state is HomeSeeAll ? state.categoryList.length : 0,
-        itemBuilder: (context, index) {
-          final item = (state as HomeSeeAll).categoryList[index];
-          return Card(
-            child:
-                SizedBox(width: context.dynamicWidth(0.3), child: Image.asset("assets/images/my_furniture_logo.png")),
-          );
-        },
+    return Padding(
+      padding: context.paddingNormal,
+      child: SizedBox(
+        height: context.dynamicHeight(0.1),
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: state is HomeLoaded ? state.categoryList.length : 0,
+          itemBuilder: (context, index) {
+            final item = (state as HomeLoaded).categoryList[index];
+            return CategoryDisplayTile(
+              categoryModel: item,
+            );
+          },
+        ),
       ),
     );
   }
 
   // Selector state dinler ve değişiklik olduğunda builder çalışır.
   Widget _productListView(BuildContext context, HomeState state) {
-    return BlocSelector<HomeCubit, HomeState, List<ProductModel>>(
-      // state HomeLoaded ise state.productList, değilse context.read<HomeCubit>().allProducts döndürür.
-      selector: (state) {
-        return state is HomeLoaded ? state.productList : context.read<HomeCubit>().allProducts;
-      },
-      builder: (context, state) {
-        return ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: state.length,
-          itemBuilder: (context, index) {
-            final item = state[index];
-            return Card(
-              child: Column(
-                children: [
-                  Text(item.productName),
-                  SizedBox(width: context.dynamicWidth(0.3), child: Image.asset("assets/images/my_furniture_logo.png")),
-                ],
-              ),
-            );
-          },
-        );
-      },
+    return Padding(
+      padding: context.paddingNormal,
+      child: BlocSelector<HomeCubit, HomeState, List<ProductModel>>(
+        selector: (state) {
+          return state is HomeLoaded ? state.productList : context.read<HomeCubit>().allProducts;
+        },
+        builder: (context, state) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: state.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.7,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) {
+              if (state == [] || state == null) {
+                return const Center(child: Text("No results found"));
+              }
+              return ProductDisplayTile(productModel: state[index]);
+            },
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildError(HomeError state) {
-    return Center(child: Text(state.message));
+  Widget _sliderListView(BuildContext context) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: SizedBox(
+        height: context.dynamicHeight(0.2),
+        child: FurnitureSlider(images: const ["https://codeocean.net/my_furniture/sliders/slider_1.png"]),
+      ),
+    );
+  }
+
+  Widget _buildError(BuildContext context, HomeError state) {
+    return Padding(
+      padding: context.paddingNormal,
+      child: Center(child: Text(state.message)),
+    );
   }
 }

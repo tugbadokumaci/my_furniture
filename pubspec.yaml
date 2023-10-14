@@ -47,6 +47,7 @@ dependencies:
   flutter_lints: ^2.0.3
   bloc: ^8.1.2
   very_good_analysis: ^5.1.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
   assets:
     - assets/images/
     - assets/translations/
+    - assets/fonts/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

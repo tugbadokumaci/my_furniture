@@ -2,6 +2,7 @@ class NavigationConstants {
   static const SPLASH_VIEW = '/splash-view';
   static const HOME_VIEW = '/home-view';
   static const LOGIN_VIEW = '/login-view';
+  static const CATEGORY_VIEW = '/category-view';
   static const SIGNUP_VIEW = '/signup-view';
   static const PROFILE_VIEW = '/profile-view';
   static const SETTINGS_VIEW = '/settings-view';
