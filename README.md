@@ -1,20 +1,15 @@
-<<<<<<< HEAD
-# my_furniture
-=======
-# my_furniture
+# My Furniture App
 
-A new Flutter project.
+![Screenshot 2023-09-09 at 11 03 27](https://github.com/tugbadokumaci/my_furniture/assets/88103768/81263b62-bf07-40c1-a03d-7c5ada6799d4)
 
-## Getting Started
+## *This app is still under development.*
 
-This project is a starting point for a Flutter application.
+### The expected features of this app when it is finished are:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> master
+* Users can browse the products they want by category after logging in to the app.
+* Users can view the prices of the products in increasing/decreasing order in the search results of the products.
+* Users can add the desired products to the wishlist.
+* Users can add the desired products to the cart.
+* Users can make comments about the products.
+* Users can evaluate the products they have purchased.
+* Users can access the images of the different colors of the products from the product detail page.
