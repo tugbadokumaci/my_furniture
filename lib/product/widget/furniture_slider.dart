@@ -15,8 +15,12 @@ class _FurnitureSliderState extends State<FurnitureSlider> {
   int _selectedValueIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [Expanded(flex: 10, child: buildPageView()), Expanded(child: buildListViewCirleIndicator())],
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        buildPageView(),
+        buildListViewCirleIndicator(),
+      ],
     );
   }
 

@@ -27,6 +27,20 @@ class TextThemeLight {
       letterSpacing: 0.5,
       color: ColorSchemeLight.instance.dark);
 
+  final TextStyle TitleSmall = TextStyle(
+      fontWeight: FontWeight.w600, // semi-bold
+      fontSize: 18,
+      fontFamily: 'Poppins',
+      letterSpacing: 0.5,
+      color: ColorSchemeLight.instance.dark);
+
+  final TextStyle TextBig = TextStyle(
+      fontSize: 16,
+      fontFamily: 'Poppins',
+      letterSpacing: 0.5,
+      fontWeight: FontWeight.w400,
+      color: ColorSchemeLight.instance.orange);
+
   final TextStyle TextMedium =
       TextStyle(fontSize: 14, fontFamily: 'Poppins', letterSpacing: 0.5, color: ColorSchemeLight.instance.darkGray);
   final TextStyle TextSmall =

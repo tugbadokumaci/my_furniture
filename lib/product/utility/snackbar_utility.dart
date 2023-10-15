@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../model/comment_model.dart';
 import '../model/product_model.dart';
 
 class SnackBarUtility {

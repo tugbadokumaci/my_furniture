@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_furniture/core/extension/context_extension.dart';
+import 'package:my_furniture/core/init/theme/light/color_scheme_light.dart';
 
 import '../model/color_model.dart';
 
@@ -37,17 +38,18 @@ class _ColorListViewState extends State<ColorListView> {
 
   Widget _buildColorColumn(ColorModel colorModel, int index) => Column(
         children: [
-          Expanded(
-            child: _buildColorCircleAvatar(colorModel, index),
-          ),
-          Expanded(child: Text(colorModel.colorName)),
+          // Expanded(child:
+          _buildColorCircleAvatar(colorModel, index),
+          // ),
+          // Expanded(child: Text(colorModel.colorName)),
         ],
       );
 
   Widget _buildColorCircleAvatar(ColorModel colorModel, int index) => Padding(
-      padding: context.paddingNormal,
-      child: CircleAvatar(
-        backgroundColor: Color(int.parse('0xff${colorModel.colorHEXCode}')),
-        radius: index == _selectedValueIndex ? 15 : 20,
-      ));
+        padding: context.paddingLow,
+        child: CircleAvatar(
+          backgroundColor: Color(int.parse('0xff${colorModel.colorHEXCode}')),
+          radius: index == _selectedValueIndex ? 15 : 21,
+        ),
+      );
 }

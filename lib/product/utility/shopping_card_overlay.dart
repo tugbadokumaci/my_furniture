@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_furniture/core/extension/context_extension.dart';
-import 'package:my_furniture/core/init/theme/light/color_scheme_light.dart';
 
+import '../../core/init/theme/light/color_scheme_light.dart';
 import '../../core/init/theme/light/text_theme_light.dart';
 import '../model/color_model.dart';
 import '../model/product_model.dart';
@@ -17,7 +17,8 @@ class ShoppingCartOverlay extends StatefulWidget {
 }
 
 class _ShoppingCartOverlayState extends State<ShoppingCartOverlay> {
-  late OverlayEntry overlayEntry;
+  late OverlayEntry _overlayEntry;
+  List<OverlayEntry> _overlayEntries = [];
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _ShoppingCartOverlayState extends State<ShoppingCartOverlay> {
 
   void showOverlay() async {
     OverlayState? overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(
+    _overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         top: 0,
         left: 0,
@@ -90,18 +91,20 @@ class _ShoppingCartOverlayState extends State<ShoppingCartOverlay> {
               ],
             ),
           ),
-        ),
+        ), // Set the z-index here.
       ),
     );
 
-    overlayState!.insert(overlayEntry);
+    _overlayEntries.add(_overlayEntry);
+    overlayState!.insert(_overlayEntry);
 
     await Future.delayed(const Duration(seconds: 5));
-    overlayEntry.remove();
+    _overlayEntry.remove();
+    _overlayEntries.remove(_overlayEntry);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(); // Burada görsel olarak herhangi bir şey çizilmez.
+    return Container(); // This widget is not used, but it is required by Flutter.
   }
 }
